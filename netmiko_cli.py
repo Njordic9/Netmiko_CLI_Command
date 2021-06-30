@@ -8,7 +8,7 @@ import datetime
 import netmiko
 import keyring
 from netmiko import ConnectHandler
-from vchosts import all_devices
+from vchosts import all_devices #Lists of devices and their Credentials
 from netmiko.ssh_exception import NetMikoTimeoutException, NetMikoAuthenticationException
 from paramiko.ssh_exception import SSHException
 from multiprocessing import Pool
@@ -24,6 +24,17 @@ def start_commands(a_device, termuser):
         net_connect.disconnect()
     except (NetMikoTimeoutException, NetMikoAuthenticationException) as e:
         print("Could not connect to " + a_device.get("ip") + ", Error: ", e)
+        
+#Format of Device list:
+#cisco_asa = {
+#    'device_type': 'cisco_asa',
+#    'ip':   '<>',
+#    'username': username,
+#    'password': password,
+#    'port': 22,          # optional, defaults to 22
+#    'secret': password,     # optional, defaults to ''
+#    'verbose': False,       # optional, defaults to False
+#}
 
 def apply_async_with_callback(termuser):
     try:
